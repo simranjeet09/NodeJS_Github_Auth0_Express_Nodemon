@@ -13,9 +13,13 @@ app.get('/', function(req, res) {
   res.render('pages/index',{client_id: clientID});
 
 });
+
+//register route to render failed page 
 app.get('/failed', function(req, res) {
     res.render('pages/failed');
   });
+
+  //register route to render logout page
   app.get('/logout', function(req, res) {
     res.render('pages/logout');
   });
@@ -26,7 +30,7 @@ const clientID = '287c92f168eb5b9dbbb5'
 const clientSecret = '05c8d0c123ff58583ce629bf80d95010ab5e61ac'
 
 app.get('/home', (req, res) => {
-  
+  //if user denies access to github account display login  failed page. 
   if(req.query.error=="access_denied"){
     res.redirect('/failed');
     return;
