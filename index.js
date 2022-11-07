@@ -13,6 +13,12 @@ app.get('/', function(req, res) {
   res.render('pages/index',{client_id: clientID});
 
 });
+app.get('/failed', function(req, res) {
+    res.render('pages/failed');
+  });
+  app.get('/logout', function(req, res) {
+    res.render('pages/logout');
+  });
 
 const port = process.env.PORT || 4000;
 app.listen(port , () => console.log('App listening on port ' + port));
@@ -20,6 +26,11 @@ const clientID = '287c92f168eb5b9dbbb5'
 const clientSecret = '05c8d0c123ff58583ce629bf80d95010ab5e61ac'
 
 app.get('/home', (req, res) => {
+  
+  if(req.query.error=="access_denied"){
+    res.redirect('/failed');
+    return;
+}
   const requestToken = req.query.code
   axios({
     method: 'post',
